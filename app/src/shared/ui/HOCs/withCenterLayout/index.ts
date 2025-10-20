@@ -1,0 +1,1 @@
+export { withCenterLayout } from './ui';
