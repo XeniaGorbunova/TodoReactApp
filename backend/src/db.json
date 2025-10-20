@@ -1,8 +1,13 @@
 {
   "todos": [
     {
-      "id": "454d",
+      "id": "e988",
       "title": "New task",
+      "status": false
+    },
+    {
+      "id": "f508",
+      "title": "Second task",
       "status": false
     }
   ]
