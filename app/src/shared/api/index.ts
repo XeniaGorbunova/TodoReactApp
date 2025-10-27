@@ -1,4 +1,4 @@
-import { changeTodoStatus, createTodo, createTodoDetailQueryKey, deleteTodo, getTodoById, getTodos, TODOS_LIST_QUERY_KEY } from './todos';
+import { changeTodoStatus, createTodo, createTodoDetailQueryKey, deleteTodo, editTodo, getTodoById, getTodos, TODOS_LIST_QUERY_KEY } from './todos';
 
 export const todosApi = {
   queries: {
@@ -6,7 +6,8 @@ export const todosApi = {
     getTodoById,
     createTodo,
     deleteTodo,
-    changeTodoStatus
+    changeTodoStatus,
+    editTodo
   },
   queryKeys: {
     TODOS_LIST_QUERY_KEY,

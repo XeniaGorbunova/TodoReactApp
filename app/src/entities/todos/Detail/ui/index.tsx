@@ -7,13 +7,17 @@ interface DeatilProps extends Todo {
     actions?: ReactNode;
 }
 
-export const Detail: FC<DeatilProps> = ({ status, title, actions }) => {
+export const Detail: FC<DeatilProps> = ({ status, title, actions, description }) => {
     return (
         <div className={styles.wr}>
             <div className={classNames('card', styles.content)}>
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
-                    <p className="card-text">{status ? 'Done' : 'Not Done'}</p>
+                    {description 
+                        ? <p className="card-text">{description}</p>
+                        : null
+                    }
+                    <p className={classNames('card-text', status ? 'text-success' : 'text-warning')}><b>{status ? 'Done' : 'Not Done'}</b></p>
                     <div className={styles['actions-wr']}>{actions}</div>
                 </div>
             </div>

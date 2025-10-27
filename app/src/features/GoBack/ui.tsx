@@ -1,11 +1,21 @@
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const GoBack: FC = () => {
+interface GoBackProps {
+    action?: () => void;
+}
+
+export const GoBack: FC<GoBackProps> = ({ action }) => {
     const navigate = useNavigate();
 
     const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        console.log('!!', action);
+
+        if (action) {
+            action();
+            return;
+        }
 
         navigate('..', { relative: 'path' });
     }

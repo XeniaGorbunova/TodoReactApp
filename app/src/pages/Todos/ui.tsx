@@ -13,7 +13,7 @@ export const Todos: FC = () => {
     return withQuery(() => (
         <>
         <h2 className="text-center mb-4">Todos Page</h2>
-        <TodoCreateForm />
+        <TodoCreateForm isEditing={false} />
         <ul className="list-group mb-4">
             {todos.map((todo, index) => 
             <TodosListItem 

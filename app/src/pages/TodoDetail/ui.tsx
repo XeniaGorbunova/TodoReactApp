@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { useParams } from "react-router-dom";
 import { useTodoDetailApi } from "./api";
 import { TodoDetailCard } from "entities/todos/Detail";
@@ -7,27 +7,34 @@ import { ChangeStatusTodoFeature } from "features/todos/ChangeStatus";
 import { DeleteTodoFeature } from "features/todos/Delete";
 import { withQuery } from "shared/ui/HOCs/withQuery";
 import { todosApi } from "shared/api";
+import { EditTodoFeature } from "features/todos/Edit";
+import { TodoCreateForm } from "features/todos/Create";
 
 export const TodoDetail: FC = () => {
+    const [ isEditing, setIsEditing ] = useState(false);
     const { id } = useParams();
     const { todo, isLoading, isError, error, refetch } = useTodoDetailApi({ id: id! });
 
     return withQuery(() => (
         <>
             <h2 className="text-center mb-4">Todo page</h2>
-            <TodoDetailCard 
-                {...todo!}
-                actions={
-                    <>
-                    <GoBack />
-                    <ChangeStatusTodoFeature 
-                        id={todo!.id} 
-                        status={todo!.status} 
-                        invalidateQueriesKeys={[todosApi.queryKeys.TODOS_LIST_QUERY_KEY, todosApi.queryKeys.createTodoDetailQueryKey({id: todo!.id})]} />
-                    <DeleteTodoFeature id={todo!.id} goBack />
-                    </>
-                }
-            />
+            {isEditing 
+                ? <TodoCreateForm isEditing setIsEditing={setIsEditing} {...todo} />
+                : <TodoDetailCard 
+                        {...todo!}
+                        actions={
+                            <>
+                            <GoBack />
+                            <EditTodoFeature setIsEditing={setIsEditing} />
+                            <ChangeStatusTodoFeature 
+                                id={todo!.id} 
+                                status={todo!.status} 
+                                invalidateQueriesKeys={[todosApi.queryKeys.TODOS_LIST_QUERY_KEY, todosApi.queryKeys.createTodoDetailQueryKey({id: todo!.id})]} />
+                            <DeleteTodoFeature id={todo!.id} goBack />
+                            </>
+                        }
+                    />
+            }        
         </>
     ))({ isLoading, isError, error, refetch });
 }

@@ -11,3 +11,17 @@ export const useTodoCreateMutation = () => {
         queryClient.invalidateQueries(todosApi.queryKeys.TODOS_LIST_QUERY_KEY as InvalidateQueryFilters)
     }
   })};
+
+export const useTodoEditMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (...params: Parameters<typeof todosApi.queries.editTodo>) =>
+      todosApi.queries.editTodo(...params),
+    onSuccess() {
+      queryClient.invalidateQueries(
+        todosApi.queryKeys.TODOS_LIST_QUERY_KEY as InvalidateQueryFilters
+      );
+    },
+  });
+};  
