@@ -6,7 +6,11 @@ export const getTodoById = ({ id }: Pick<Todo, 'id'>) => api.get(`todos/${id}`).
 export const createTodo = ({ title, description }: Pick<Todo, 'title' | 'description'>) =>
   api.post(`todos`, { json: { title, status: false, description }});
 export const deleteTodo = ({ id }: Pick<Todo, 'id'>) => api.delete(`todos/${id}`);
-export const changeTodoStatus = ({ id, status }: Pick<Todo, 'id' | 'status'>) =>
-  api.patch(`todos/${id}`, { json: {status} });
-export const editTodo = ({ id, title, description }: Pick<Todo, "id" | "title" | "description">) =>
-  api.patch(`todos/${id}`, { json: { title, description } });
+export const changeTodoStatus = ({ id, status }: Pick<Todo, "id" | "status">) =>
+  api.patch(`todos/${id}`, { json: { status } }).json<Todo>();
+export const editTodo = ({
+  id,
+  title,
+  description,
+}: Pick<Todo, "id" | "title" | "description">) =>
+  api.patch(`todos/${id}`, { json: { title, description } }).json<Todo>();

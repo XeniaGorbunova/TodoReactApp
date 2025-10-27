@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import type { Todo } from "shared/model/Todo";
-import { useChangeStatus, type UseChangeStatusParams } from "./api";
+import { useChangeStatus } from "./api";
 
-type ChangeStatusProps  = Pick<Todo, 'id' | 'status'> & UseChangeStatusParams;
+type ChangeStatusProps  = Pick<Todo, 'id' | 'status'>;
 
-export const ChangeStatus: FC<ChangeStatusProps> = ({id, status, invalidateQueriesKeys}) => {
-    const { mutateAsync, isPending } = useChangeStatus({ invalidateQueriesKeys });
+export const ChangeStatus: FC<ChangeStatusProps> = ({id, status}) => {
+    const { mutateAsync, isPending } = useChangeStatus();
     const clickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 

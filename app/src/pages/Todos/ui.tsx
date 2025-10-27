@@ -4,7 +4,6 @@ import { useTodosApi } from "./api";
 import { ChangeStatusTodoFeature } from "features/todos/ChangeStatus";
 import { DeleteTodoFeature } from "features/todos/Delete";
 import { withQuery } from "shared/ui/HOCs/withQuery";
-import { todosApi } from "shared/api";
 import { TodoCreateForm } from "features/todos/Create";
 
 export const Todos: FC = () => {
@@ -21,7 +20,7 @@ export const Todos: FC = () => {
             {...todo} 
             index={index} 
             actions={<>
-                <ChangeStatusTodoFeature id={todo.id} status={todo.status} invalidateQueriesKeys={[todosApi.queryKeys.TODOS_LIST_QUERY_KEY]} />
+                <ChangeStatusTodoFeature id={todo.id} status={todo.status} />
                 <DeleteTodoFeature id={todo.id} />
             </>} 
             />)}

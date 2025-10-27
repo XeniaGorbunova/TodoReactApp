@@ -1,18 +1,6 @@
 {
   "todos": [
     {
-      "id": "f508",
-      "title": "Second task",
-      "status": false,
-      "description": "Second interesting task"
-    },
-    {
-      "id": "1042",
-      "title": "One more task!!",
-      "status": false,
-      "description": "One more task!!"
-    },
-    {
       "id": "96ce",
       "title": "To do this",
       "status": false,

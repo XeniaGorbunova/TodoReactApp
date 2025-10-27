@@ -1,29 +1,17 @@
-import { useMutation, useQueryClient, type QueryKey } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { todosApi } from 'shared/api';
+import type { Todo } from 'shared/model/Todo';
 
-export interface UseChangeStatusParams {
-  invalidateQueriesKeys?: QueryKey;
-}
-
-export const useChangeStatus = ({ invalidateQueriesKeys }: UseChangeStatusParams) => {
+export const useChangeStatus = () => {
   const queryClient = useQueryClient();
 
    return useMutation({
      mutationFn: (
        ...params: Parameters<typeof todosApi.queries.changeTodoStatus>
      ) => todosApi.queries.changeTodoStatus(...params),
-     onSuccess: () => {
-       if (invalidateQueriesKeys?.length) {
-         // Use Promise.all to invalidate all queries at once
-         Promise.all(
-           invalidateQueriesKeys.map((queryKey) =>
-             queryClient.invalidateQueries({
-               queryKey: queryKey as QueryKey,
-               exact: true, // Be more specific
-             })
-           )
-         );
-       }
+     onSuccess: (todo: Todo) => {
+        queryClient.setQueryData(todosApi.queryKeys.createTodoDetailQueryKey({ id: todo.id}), todo);
+        queryClient.invalidateQueries({queryKey: todosApi.queryKeys.TODOS_LIST_QUERY_KEY});
      },
    });
 };

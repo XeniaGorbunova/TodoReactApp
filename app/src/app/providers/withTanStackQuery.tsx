@@ -6,6 +6,7 @@ const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false,
+            notifyOnChangeProps: ['data', 'error']
             // throwOnError: true - we have to switch on to use ErrorBoundary
         }
     },

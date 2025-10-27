@@ -6,7 +6,6 @@ import { GoBack } from "features/GoBack";
 import { ChangeStatusTodoFeature } from "features/todos/ChangeStatus";
 import { DeleteTodoFeature } from "features/todos/Delete";
 import { withQuery } from "shared/ui/HOCs/withQuery";
-import { todosApi } from "shared/api";
 import { EditTodoFeature } from "features/todos/Edit";
 import { TodoCreateForm } from "features/todos/Create";
 
@@ -28,8 +27,7 @@ export const TodoDetail: FC = () => {
                             <EditTodoFeature setIsEditing={setIsEditing} />
                             <ChangeStatusTodoFeature 
                                 id={todo!.id} 
-                                status={todo!.status} 
-                                invalidateQueriesKeys={[todosApi.queryKeys.TODOS_LIST_QUERY_KEY, todosApi.queryKeys.createTodoDetailQueryKey({id: todo!.id})]} />
+                                status={todo!.status} />
                             <DeleteTodoFeature id={todo!.id} goBack />
                             </>
                         }
