@@ -4,7 +4,8 @@ import type { FC } from 'react';
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            refetchOnWindowFocus: false
+            refetchOnWindowFocus: false,
+            throwOnError: true
         }
     }
 });
