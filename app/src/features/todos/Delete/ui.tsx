@@ -1,18 +1,20 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Todo } from "shared/model/Todo";
 import { useDeleteTodo } from "./api";
+import { Modal } from "widgets/Modal";
 
 interface DeleteProps extends Pick<Todo, 'id'> {
     goBack?: boolean
 }
 
 export const Delete: FC<DeleteProps> = ({ id, goBack }) => {
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
     const { mutateAsync, isPending } = useDeleteTodo({id});
     const navigate = useNavigate();
-    const clickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const deleteHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-
+        
         if (isPending) return
 
         await mutateAsync({id});
@@ -20,10 +22,30 @@ export const Delete: FC<DeleteProps> = ({ id, goBack }) => {
             navigate('..', {relative: 'path'});
         }
     }
+
+    const openModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        setIsModalOpen(true)
+    };
+    const closeModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        setIsModalOpen(false)
+    };
     
-    return (
-        <button type="button" onClick={clickHandler} className="btn btn-danger mx-1">
-            Delete
-        </button>
-    );
+    return (isModalOpen 
+            ? <Modal>
+                <p>Are you sure you want to delete this task?</p>
+                <button type="button" onClick={closeModalHandler} className="btn btn-primary mx-1">
+                    Cancel
+                </button>
+                <button type="button" onClick={deleteHandler} className="btn btn-danger mx-1">
+                    Delete
+                </button>
+              </Modal>
+            : <button type="button" onClick={openModalHandler} className="btn btn-danger mx-1">
+                Delete
+              </button>    
+            );
 }
